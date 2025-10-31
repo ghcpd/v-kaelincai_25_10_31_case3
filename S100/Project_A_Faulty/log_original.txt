@@ -1,2 +1,0 @@
-# Placeholder log. Will be overwritten by run_original.sh
-Not yet executed.
