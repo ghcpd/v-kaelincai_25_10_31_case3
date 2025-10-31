@@ -1,3 +1,0 @@
-pytest
-orjson==3.10.3
-# dateutil intentionally omitted to trigger timestamp parsing fragility

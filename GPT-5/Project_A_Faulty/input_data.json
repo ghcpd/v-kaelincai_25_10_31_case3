@@ -1,6 +1,0 @@
-{
-  "records": [
-    {"id": "alpha", "timestamp": "2025-10-31Z", "payload": {"value": 10}},
-    {"id": "beta", "timestamp": "2025-10-31+00:00", "payload": {"value": 20}}
-  ]
-}

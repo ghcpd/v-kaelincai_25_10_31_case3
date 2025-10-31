@@ -1,3 +1,0 @@
-pytest
-python-dateutil
-orjson  # optional, will be used if available
