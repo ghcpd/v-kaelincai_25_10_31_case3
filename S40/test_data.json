@@ -1,0 +1,89 @@
+{
+  "case_01_schema_upgrade": {
+    "description": "Schema version 2.0 introduces OS-specific artifact map incompatible with v1 parser.",
+    "compatibility_issue": "API schema version mismatch",
+    "input": {
+      "schema_version": "2.0",
+      "name": "demo-app",
+      "artifacts": {
+        "posix": {
+          "path": "linux.tar.gz",
+          "hash": "abc"
+        },
+        "nt": {
+          "path": "windows.zip",
+          "hash": "def"
+        }
+      },
+      "hooks": []
+    },
+    "expected_outcome_faulty": "fail",
+    "expected_outcome_optimized": "pass",
+    "issue_type": "API version mismatch"
+  },
+  "case_02_non_string_payload": {
+    "description": "Newer clients send parsed dict instead of raw JSON string.",
+    "compatibility_issue": "Input type assumption",
+    "input": {
+      "schema_version": "1.0",
+      "name": "demo-app",
+      "artifact_path": "bundle.zip",
+      "hash": "deadbeef",
+      "hooks": []
+    },
+    "expected_outcome_faulty": "fail",
+    "expected_outcome_optimized": "pass",
+    "issue_type": "Payload coercion"
+  },
+  "case_03_nested_hook_objects": {
+    "description": "Hooks are now structured objects, old parser expects colon separated strings.",
+    "compatibility_issue": "Protocol change in hooks",
+    "input": {
+      "schema_version": "1.0",
+      "name": "demo-app",
+      "artifact_path": "bundle.zip",
+      "hash": "deadbeef",
+      "hooks": [
+        {
+          "name": "install",
+          "path": "scripts/install.sh"
+        }
+      ]
+    },
+    "expected_outcome_faulty": "fail",
+    "expected_outcome_optimized": "pass",
+    "issue_type": "Hook representation"
+  },
+  "case_04_windows_path_mapping": {
+    "description": "Path normalization must respect requested target OS.",
+    "compatibility_issue": "OS-specific path normalization",
+    "input": {
+      "schema_version": "1.0",
+      "name": "demo-app",
+      "artifact_path": "C:/app/bundle.zip",
+      "hash": "deadbeef",
+      "hooks": ["install:C:/hooks/install.bat"]
+    },
+    "target_os": "posix",
+    "expected_outcome_faulty": "pass",
+    "expected_outcome_optimized": "pass",
+    "issue_type": "Cross-platform behavior"
+  },
+  "case_05_large_payload": {
+    "description": "Large metadata payload stresses parser performance and robustness.",
+    "compatibility_issue": "Performance stress",
+    "input": {
+      "schema_version": "1.0",
+      "name": "demo-app",
+      "artifact_path": "bundle.zip",
+      "hash": "deadbeef",
+      "hooks": ["install:scripts/install.sh"],
+      "metadata": {
+        "padding": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    },
+    "expected_outcome_faulty": "pass",
+    "expected_outcome_optimized": "pass",
+    "issue_type": "Large payload handling"
+  }
+}
