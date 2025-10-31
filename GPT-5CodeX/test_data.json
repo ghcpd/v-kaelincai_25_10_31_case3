@@ -1,0 +1,98 @@
+[
+  {
+    "id": "case_posix_dependency",
+    "description": "Normal directory analysis fails on Windows because the implementation shells out to POSIX utilities.",
+    "issue_type": "POSIX command requirement on non-POSIX OS",
+    "input": {
+      "relative_path": "case_posix_dependency",
+      "include_hidden": false,
+      "max_depth": 1,
+      "operations": ["list_entries", "total_size"]
+    },
+    "expected_pre": {
+      "outcome": "fail",
+      "exception": "CompatibilityIssue"
+    },
+    "expected_post": {
+      "outcome": "success",
+      "entry_count": 3,
+      "total_size_bytes": 15
+    }
+  },
+  {
+    "id": "case_deep_tree",
+    "description": "Deep directory traversal with hidden files and large payloads triggers incompatibility in POSIX-only commands.",
+    "issue_type": "Shell pipeline incompatibility",
+    "input": {
+      "relative_path": "case_deep_tree",
+      "include_hidden": true,
+      "max_depth": 3,
+      "operations": ["list_entries", "total_size"]
+    },
+    "expected_pre": {
+      "outcome": "fail",
+      "exception": "CompatibilityIssue"
+    },
+    "expected_post": {
+      "outcome": "success",
+      "entry_count": 8,
+      "total_size_bytes": 2450
+    }
+  },
+  {
+    "id": "case_malformed_input",
+    "description": "Missing operations array should be rejected as malformed input.",
+    "issue_type": "Input validation",
+    "input": {
+      "relative_path": "case_malformed_input",
+      "include_hidden": false,
+      "max_depth": 1
+    },
+    "expected_pre": {
+      "outcome": "fail",
+      "exception": "ValueError"
+    },
+    "expected_post": {
+      "outcome": "fail",
+      "exception": "ValueError"
+    }
+  },
+  {
+    "id": "case_injection_path",
+    "description": "Unsafe path with shell metacharacters exposes quoting vulnerability and platform-specific failures.",
+    "issue_type": "Shell argument injection",
+    "input": {
+      "relative_path": "unsafe name; echo hacked",
+      "include_hidden": false,
+      "max_depth": 2,
+      "operations": ["list_entries"]
+    },
+    "expected_pre": {
+      "outcome": "fail",
+      "exception": "CompatibilityIssue"
+    },
+    "expected_post": {
+      "outcome": "success",
+      "entry_count": 3
+    }
+  },
+  {
+    "id": "case_non_string_path",
+    "description": "Non-string path input should be rejected before any filesystem work is attempted.",
+    "issue_type": "Type safety",
+    "input": {
+      "relative_path": 123,
+      "include_hidden": false,
+      "max_depth": 1,
+      "operations": ["list_entries"]
+    },
+    "expected_pre": {
+      "outcome": "fail",
+      "exception": "TypeError"
+    },
+    "expected_post": {
+      "outcome": "fail",
+      "exception": "TypeError"
+    }
+  }
+]

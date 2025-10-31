@@ -1,0 +1,6 @@
+{
+  "path": "sample_data/case_posix_dependency",
+  "include_hidden": false,
+  "max_depth": 1,
+  "operations": ["list_entries", "total_size"]
+}
