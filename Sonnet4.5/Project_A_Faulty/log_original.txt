@@ -1,0 +1,16 @@
+{
+  "note": "This file will be generated when original_code.py is executed",
+  "expected_issues": [
+    "Deprecated asyncio.coroutine decorator (removed in Python 3.11)",
+    "typing.List deprecation warnings (Python 3.9+)",
+    "collections.Mapping removed (Python 3.10+)",
+    "asyncio.get_event_loop() deprecation (Python 3.10+)",
+    "Poor exception handling losing context"
+  ],
+  "compatibility_problems": {
+    "python_3.7_3.8": "Works with deprecation warnings",
+    "python_3.9": "Works with multiple deprecation warnings",
+    "python_3.10": "Fails due to collections.Mapping removal",
+    "python_3.11": "Fails due to asyncio.coroutine removal"
+  }
+}

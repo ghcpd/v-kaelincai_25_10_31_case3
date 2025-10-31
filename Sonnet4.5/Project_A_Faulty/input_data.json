@@ -1,0 +1,68 @@
+{
+  "test_cases": [
+    {
+      "id": 1,
+      "description": "Normal async API call with legacy asyncio.coroutine",
+      "input": {
+        "url": "https://api.example.com/data",
+        "timeout": 5
+      },
+      "expected_output": {
+        "status": "success",
+        "data": {"result": "sample"}
+      },
+      "compatibility_issue": "Uses deprecated asyncio.coroutine decorator"
+    },
+    {
+      "id": 2,
+      "description": "Type hints using old-style List instead of list",
+      "input": {
+        "items": [1, 2, 3, 4, 5]
+      },
+      "expected_output": {
+        "sum": 15,
+        "count": 5
+      },
+      "compatibility_issue": "Uses typing.List which is deprecated in Python 3.9+"
+    },
+    {
+      "id": 3,
+      "description": "Dict union with collections.Mapping",
+      "input": {
+        "config": {"key1": "value1"},
+        "overrides": {"key2": "value2"}
+      },
+      "expected_output": {
+        "merged": {"key1": "value1", "key2": "value2"}
+      },
+      "compatibility_issue": "Uses collections.Mapping instead of collections.abc.Mapping"
+    },
+    {
+      "id": 4,
+      "description": "Asyncio.get_event_loop without fallback",
+      "input": {
+        "tasks": ["task1", "task2", "task3"]
+      },
+      "expected_output": {
+        "completed": 3
+      },
+      "compatibility_issue": "Deprecated asyncio.get_event_loop() without new_event_loop fallback"
+    },
+    {
+      "id": 5,
+      "description": "Complex nested async with old exception handling",
+      "input": {
+        "operations": [
+          {"type": "fetch", "url": "http://example1.com"},
+          {"type": "process", "data": [1, 2, 3]},
+          {"type": "save", "path": "/tmp/result.txt"}
+        ]
+      },
+      "expected_output": {
+        "success": true,
+        "operations_completed": 3
+      },
+      "compatibility_issue": "Uses old-style exception chaining and asyncio patterns"
+    }
+  ]
+}
