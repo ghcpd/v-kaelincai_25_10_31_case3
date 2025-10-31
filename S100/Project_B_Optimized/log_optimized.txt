@@ -1,0 +1,2 @@
+# Placeholder log. Will be overwritten by run_optimized.sh
+Not yet executed.

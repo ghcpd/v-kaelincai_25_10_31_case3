@@ -1,0 +1,16 @@
+{
+  "batch": [
+    {
+      "task_id": "task-001",
+      "payload": {"value": 42},
+      "priority": 1,
+      "metadata": {"source": "sensor-a", "labels": ["normal"]}
+    },
+    {
+      "task_id": "task-002",
+      "payload": {"value": 3.14},
+      "priority": 2,
+      "metadata": {"source": "sensor-b", "labels": ["edge", "float"]}
+    }
+  ]
+}

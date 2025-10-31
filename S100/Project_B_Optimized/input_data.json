@@ -1,0 +1,10 @@
+{
+  "batch": [
+    {
+      "task_id": "task-010",
+      "payload": {"value": 99},
+      "priority": 1,
+      "metadata": {"source": "sensor-z", "labels": ["regression"]}
+    }
+  ]
+}
