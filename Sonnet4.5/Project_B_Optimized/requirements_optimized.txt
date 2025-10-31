@@ -1,8 +1,0 @@
-# Requirements for optimized implementation
-# This works with Python 3.9+ and is fully compatible with Python 3.10+
-
-# No external dependencies needed - using only standard library
-# Python 3.9+ required for:
-# - Built-in list/dict type hints
-# - collections.abc.Mapping
-# - Modern asyncio patterns

@@ -1,2 +1,0 @@
-Execution time: (will be measured during execution)
-Expected: ~0.5-1.0 seconds depending on Python version and deprecation overhead
